@@ -1,7 +1,4 @@
-import configparser
-import sys
-
-config_file = 'config.ini'
+ import sys
 
 class ConfigQRNet():
 

@@ -59,8 +59,8 @@ def start_chat():
 
 
 # Socket to sent messages tru tansm disp
-def start_remote_qr(mac_destiny, type_message, message):
-    message_to_send = "MAC " + mac_destiny + " " + type_message + " " + message
+def start_remote_qr(mac_destiny, message):
+    message_to_send = "MAC " + mac_destiny + " " + message
 
     socket_qr = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print((config.TRANSMISSION_DEVICE_IP, config.TRANSMISSION_PORT))
@@ -281,7 +281,6 @@ def main():
 
 
     while True:
-        type = ''
         selection = ''
         os.system('clear')
         print("Your MAC address: "+ my_mac)
@@ -295,22 +294,11 @@ def main():
 
         if option == 1:
 
-            print("Select")
-            print("1. Text")
-            print("Other")
-            selection = raw_input()
-            if selection == '1':
-                type = 't'
-                print("Enter the desired message")
-
-            else:
-                type = 'f'
-                print("Enter path")
-
+            print("Enter the desired message: ")
             message = raw_input()
             print("Enter MAC")
             dest_mac = raw_input()
-            start_remote_qr(dest_mac, type, message)
+            start_remote_qr(dest_mac, message)
             print("QR succesfuly created")
             time.sleep(1)
 
