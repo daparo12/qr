@@ -14,7 +14,7 @@ config = ConfigQRNet()
 class trans_device:
 
     PROTOCOL_VERSION = '0.1'
-    CHECKSUM = '161618'
+    CHECKSUM = '171729'
 
 
     def server(self):
@@ -22,22 +22,15 @@ class trans_device:
         s_qr.bind((config.TRANSMISSION_DEVICE_IP, config.TRANSMISSION_PORT))
         s_qr.listen()
 
-        # Se escuchan conexiones infinitamente
         while True:
             conn, address = s_qr.accept()
 
-            print("\nQR has been requested!" + address[0])
+            print("\nQR has been requested!")
 
             s_trans = Thread(target=self.new_transmition, args=(conn,))
             s_trans.daemon = True
             s_trans.start()
             s_trans.join()
-
-    def new_frame(self, mac_address, message):
-
-        new_frame = mac_address + ','+ self.PROTOCOL_VERSION + ',' + self.CHECKSUM + ',' + str(message)
-        
-        return new_frame
 
     def new_transmition(self, connection):
         frame = Frame()

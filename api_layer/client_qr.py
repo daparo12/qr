@@ -97,6 +97,7 @@ def receive_transmission_device(my_mac):
 # Translate the message
 
 def reconstruct_message(conn):
+    print("Got here!")
     data_list = []
 
     number = int(conn.recv(2048).decode('UTF-8'))
@@ -111,15 +112,11 @@ def reconstruct_message(conn):
 # Decides the recontruction of the type of item
 
 def qr_reconstruction(data_list):
-    constructor = qr_utils.qr_reader()
-    type_m = data_list[0].split(",")[1]
+    print("Got here!")
 
-    if type_m == 'f':
-        print('You\'ve recieved a QR file! ')
-        constructor.reconstruct_file(is_list=True, data=data_list)
-    elif type_m == 't':
-        print('You\'ve recieved a QR text!')
-        constructor.qr_to_text(save_in_file=False, info=data_list[0])
+    constructor = qr_utils.qr_reader()
+    print('You\'ve recieved a QR text!')
+    constructor.qr_to_text(save_in_file=False, info=data_list[0])
 
 
 # Mac address for each new node on mesh
