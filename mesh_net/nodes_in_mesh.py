@@ -45,9 +45,9 @@ def register_new_node(ip, connection):
 
         response_exist = already_exist(ip_node, mac_node, port_node)
         if response_exist == 'a':
-            connection.send('DULPICATEM'.encode('ascii'))
+            connection.send('MACDUP'.encode('ascii'))
         elif response_exist == 'b':
-            connection.send('DULPICATEP'.encode('ascii'))
+            connection.send('PORTDUP'.encode('ascii'))
         else:
             connection.send('OK/200'.encode('ascii'))
             add_new_node(ip_node, mac_node, port_node) #Add the newly created node
@@ -166,10 +166,10 @@ def find_path(conn):
     message_data = conn.recv(2048).decode('UTF-8')
     message_data = message_data.split(' ')
 
-    if message_data[0] != 'SRC':
+    if message_data[0] != 'FROM':
         print("Origin MAC Address was not given")
 
-    elif message_data[2] != 'DST':
+    elif message_data[2] != 'TO':
         print("Receiver MAC address was not given.")
 
     else:
@@ -177,7 +177,7 @@ def find_path(conn):
         mc_destiny = message_data[3]
         if find_index_by_mac(mc_destiny) == -1:
             print('Receiver node address ' + mc_destiny+ ' was not found in the mesh net: ')
-            message = 'UNREGISTERED'
+            message = 'NOTFOUND'
         else:
             #Happy path
             node_list = sending_path(mc_origin, mc_destiny)

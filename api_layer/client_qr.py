@@ -143,10 +143,10 @@ def register_mesh(port):
         print("Node has been integrated")
 
     else:
-        if data[0] == 'DULPICATEM':
+        if data[0] == 'MACDUP':
             print("Mac address already in mesh")
 
-        elif data[0] == 'DULPICATEP':
+        elif data[0] == 'PORTDUP':
             print("IP port is alreeady used")
 
         else:
@@ -190,12 +190,12 @@ def prepare_send_in_mesh(origin, destiny, message):
     socket_mesh = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     socket_mesh.connect((config.NET_MESH_IP, config.RECEIVING_MESH_PORT))
 
-    path_msj = "SRC " + origin + " DST " + destiny
+    path_msj = "FROM " + origin + " TO " + destiny
     socket_mesh.send(path_msj.encode('ascii'))
     path = socket_mesh.recv(2048).decode('UTF-8')
     path = path.split(' ')
 
-    if path[0] == 'UNREGISTERED':
+    if path[0] == 'NOTFOUND':
         print("Mac doesn't exist")
 
     elif path[0] == 'PATH':
@@ -217,10 +217,10 @@ def prepare_send_in_mesh(origin, destiny, message):
 
 def send_mesh(mac_origin):
     while True:
-        print('Format: SEND <mac_destino> <mensaje a enviar>')
+        print('Format: MSG <mac_to> <message content>')
         message_in_mesh = str(input("#>> "))
         message_in_mesh = message_in_mesh.split(' ')
-        if message_in_mesh[0] == 'SEND' and len(message_in_mesh) >= 3:
+        if message_in_mesh[0] == 'MSG' and len(message_in_mesh) >= 3:
 
             if len(message_in_mesh[1]) != 12:
                 print("Verify mac address")
